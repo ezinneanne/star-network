@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Send Money</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fdfdfd;
+      padding: 20px;
+      margin: 0;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      margin: 0;
+    }
+    .section-box {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .recipient-box {
+      display: flex;
+      align-items: center;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+    .avatar-small {
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      margin-right: 10px;
+    }
+    .recipient-name {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .recipient-id {
+      color: #777;
+      font-size: 12px;
+    }
+    .dropdown {
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    .amount-box {
+      display: flex;
+      align-items: center;
+      background-color: #f4f4f4;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .currency-symbol {
+      font-size: 20px;
+      margin-right: 6px;
+      color: #333;
+    }
+    input[type="text"], input[type="number"] {
+      flex: 1;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+    .note-input {
+      width: 100%;
+      background-color: #f4f4f4;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+    }
+    .summary-box {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .detail-label {
+      font-size: 14px;
+      color: #444;
+    }
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .detail-value-small {
+      font-size: 13px;
+      color: #666;
+    }
+    .amount-highlight {
+      color: #f97316;
+      font-size: 16px;
+    }
+    .divider {
+      height: 1px;
+      background-color: #eee;
+      margin: 10px 0;
+    }
+    .total-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    .total-amount {
+      font-size: 18px;
+      font-weight: bold;
+      color: #f97316;
+    }
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .confirm-button, .cancel-button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+    }
+    .confirm-button {
+      background-color: #6a78f0;
+    }
+    .cancel-button {
+      background-color: #ccc;
+    }
+    .network-status {
+      text-align: center;
+      font-size: 14px;
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <button onclick="window.history.back()">←</button>
+    <h1>Send Money</h1>
+    <div></div>
+  </div>
+
+  <div class="section-box">
+    <div class="section-title">Select Recipient</div>
+    <div class="recipient-box" onclick="toggleDropdown()">
+      <img src="https://randomuser.me/api/portraits/women/44.jpg" id="avatar" class="avatar" />
+      <div>
+        <div class="recipient-name" id="recipient-name">Jane Doe</div>
+        <div class="recipient-id" id="recipient-id">user123</div>
+      </div>
+    </div>
+    <div class="dropdown" id="dropdown" style="display: none;">
+      <!-- Recipients -->
+    </div>
+  </div>
+
+  <div class="section-box">
+    <div class="section-title">Amount</div>
+    <div class="amount-box">
+      <div class="currency-symbol">₦</div>
+      <input type="number" id="amount" placeholder="0.00" oninput="updateSummary()" />
+    </div>
+
+    <div class="section-title" style="margin-top: 20px;">Optional Note</div>
+    <input type="text" id="note" class="note-input" placeholder="e.g. Dinner with Friends" oninput="updateSummary()" />
+  </div>
+
+  <div class="summary-box">
+    <div class="section-title">Transaction Details</div>
+    <div class="detail-row">
+      <div class="detail-label">Recipient:</div>
+      <div class="detail-value" id="summary-recipient">Jane Doe</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Amount:</div>
+      <div class="detail-value amount-highlight" id="summary-amount">₦0.00</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Note:</div>
+      <div class="detail-value-small" id="summary-note">N/A</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Fees:</div>
+      <div class="detail-value-small">₦10.00</div>
+    </div>
+    <div class="divider"></div>
+    <div class="detail-row">
+      <div class="total-label">Total (including fees):</div>
+      <div class="total-amount" id="summary-total">₦10.00</div>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <div class="confirm-button">Confirm Transaction</div>
+    <div class="cancel-button">Cancel Transaction</div>
+  </div>
+
+  <div class="network-status">Star Network Connected</div>
+
+  <script>
+    const recipients = [
+      { name: 'Jane Doe', id: 'user123', photo: 'https://randomuser.me/api/portraits/women/44.jpg' },
+      { name: 'John Smith', id: 'user456', photo: 'https://randomuser.me/api/portraits/men/22.jpg' },
+      { name: 'Ada Love', id: 'user789', photo: 'https://randomuser.me/api/portraits/women/30.jpg' }
+    ];
+
+    const dropdown = document.getElementById('dropdown');
+    const recipientName = document.getElementById('recipient-name');
+    const recipientId = document.getElementById('recipient-id');
+    const avatar = document.getElementById('avatar');
+    const summaryRecipient = document.getElementById('summary-recipient');
+
+    function toggleDropdown() {
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+      if (dropdown.innerHTML === '') {
+        recipients.forEach(rec => {
+          const item = document.createElement('div');
+          item.className = 'dropdown-item';
+          item.innerHTML = `
+            <img src="${rec.photo}" class="avatar-small" />
+            <div>
+              <div class="recipient-name">${rec.name}</div>
+              <div class="recipient-id">${rec.id}</div>
+            </div>
+          `;
+          item.onclick = () => {
+            recipientName.textContent = rec.name;
+            recipientId.textContent = rec.id;
+            avatar.src = rec.photo;
+            summaryRecipient.textContent = rec.name;
+            dropdown.style.display = 'none';
+          };
+          dropdown.appendChild(item);
+        });
+      }
+    }
+
+    function updateSummary() {
+      const amount = parseFloat(document.getElementById('amount').value || 0);
+      const note = document.getElementById('note').value || 'N/A';
+      document.getElementById('summary-amount').textContent = `₦${amount.toFixed(2)}`;
+      document.getElementById('summary-note').textContent = note;
+      document.getElementById('summary-total').textContent = `₦${(amount + 10).toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
