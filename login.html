@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Offline Pay - Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      display: block;
+      margin: 0 auto 20px;
+      object-fit: contain;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 10px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .button {
+      background-color: #6a78f0;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    .biometric {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+
+    .biometric-icon {
+      font-size: 24px;
+      margin-right: 8px;
+      color: #6a78f0;
+    }
+
+    .biometric-text {
+      color: #6a78f0;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    .inline-text {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .inline-text span {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .link {
+      color: #f56c94;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="offlinepaylogo_transparent.png" alt="Offline Pay Logo" class="logo" />
+
+    <h1 class="title">Login</h1>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="e.g., user@example.com" />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter your password" />
+
+    <button class="button" onclick="alert('Logging in...')">Log In</button>
+
+    <div class="biometric" onclick="alert('Biometric login coming soon')">
+      <span class="biometric-icon">🔒</span>
+      <span class="biometric-text">Use Biometrics</span>
+    </div>
+
+    <div class="inline-text">
+      <span>Don't Have an account?</span>
+      <a href="signup.html" class="link" onclick="alert('Navigating to Sign Up...')"> Sign Up Instead</a>
+    </div>
+  </div>
+
+</body>
+</html>
